@@ -45,9 +45,38 @@ public class SongParser
 		bw.close();
 	}
 	
+	public void parseSteps() throws IOException
+	{
+		
+		File outputFile = new File("ParsedSongs\\StepSongs.txt");
+		
+		FileOutputStream fos = new FileOutputStream(outputFile);
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+		
+		
+		FileReader fin = new FileReader("RawSongs/songsteps.txt");
+		Scanner scan = new Scanner(fin);
+		
+		while(scan.hasNextLine())
+		{
+			String sequence = scan.next();
+			for (int i = 0; i < sequence.length()-1; i++)
+			{
+				System.out.println(sequence.charAt(i)+ " "+sequence.charAt(i+1)+"\n");
+				bw.write(sequence.charAt(i)+ " "+sequence.charAt(i+1)+"\n");
+				
+			}
+			
+		}
+		scan.close();
+		bw.close();
+	}
+	
+	
 	public static void main(String[] args) throws IOException
 	{
 		SongParser parser = new SongParser();
 		parser.parse();
+		parser.parseSteps();
 	}
 }

@@ -1,4 +1,4 @@
-
+import java.util.Arrays;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
@@ -15,8 +15,11 @@ public class MusicNeuralNet
 	String filename;
 	DataSet trainingSet;
 	MultiLayerPerceptron neuralNet;
-	int numIn = 5;
+	BackPropagation backProp;
+	int numIn = 1;
 	int numOut = 1;
+	int maxIterations = 10000;
+	double learningRate=0.01;
 	
 	public MusicNeuralNet(String fname)
 	{
@@ -64,20 +67,37 @@ public class MusicNeuralNet
 	public void createNeuralNet()
 	{
 		//create multi layer perceptron
-		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.TANH,5,3,3,1);
-		BackPropagation backProp = (BackPropagation)this.neuralNet.getLearningRule();
-		backProp.setMaxIterations(10000);
-		backProp.setLearningRate(0.01);
+		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.TANH,this.numIn,3,3,this.numOut);
+		this.backProp = (BackPropagation)this.neuralNet.getLearningRule();
+		this.backProp.setMaxIterations(this.maxIterations);
+		this.backProp.setLearningRate(this.learningRate);
 		this.neuralNet.setLearningRule(backProp);
+		
+	}
+	
+	public void trainNeuralNet()
+	{
 		System.out.println("Training neural network...");
 		this.neuralNet.learn(this.trainingSet,backProp);
 		this.neuralNet.save("src/neuralNet.nnet");
 		System.out.println("\nTrained and saved!\n");
 	}
 	
+	public void outputSavedNetwork()
+	{
+		NeuralNetwork loadedNet = NeuralNetwork.createFromFile("src/neuralNet.nnet");
+		this.neuralNet.setInput(new double[]{0});
+		this.neuralNet.calculate();
+		double[]networkOut = this.neuralNet.getOutput();
+		System.out.println(Arrays.toString(networkOut));
+		
+	}
+	
 	public static void main(String[] args) 
 	{
-		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongs.txt");
+		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/StepSongs.txt");
+		mNN.trainNeuralNet();
+		mNN.outputSavedNetwork();
 	}
 
 }
