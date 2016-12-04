@@ -7,6 +7,8 @@ import org.neuroph.core.data.*;
 import org.neuroph.util.TransferFunctionType;
 import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.Perceptron;
+import org.neuroph.core.learning.LearningRule;
+import org.neuroph.nnet.learning.BackPropagation;
 
 public class MusicNeuralNet 
 {
@@ -63,16 +65,20 @@ public class MusicNeuralNet
 	{
 		//create multi layer perceptron
 		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.TANH,5,3,1);
+		//this.neuralNet
+		BackPropagation backProp = (BackPropagation)this.neuralNet.getLearningRule();
+		backProp.setMaxIterations(10000);
+		backProp.setLearningRate(0.01);
+		this.neuralNet.setLearningRule(backProp);
 		System.out.println("Training neural network...");
-		this.neuralNet.learn(this.trainingSet);
+		this.neuralNet.learn(this.trainingSet,backProp);
 		this.neuralNet.save("src/neuralNet.nnet");
 		System.out.println("\nTrained and saved!\n");
 	}
 	
 	public static void main(String[] args) 
 	{
-		MusicNeuralNet mNN = new MusicNeuralNet("smallinput.txt");
-	
+		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongs.txt");
 	}
 
 }
