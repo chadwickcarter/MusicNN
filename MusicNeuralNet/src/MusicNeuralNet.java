@@ -16,7 +16,7 @@ public class MusicNeuralNet
 	DataSet trainingSet;
 	MultiLayerPerceptron neuralNet;
 	BackPropagation backProp;
-	int numIn = 1;
+	int numIn = 5;
 	int numOut = 1;
 	int maxIterations = 10000;
 	double learningRate=0.01;
@@ -86,7 +86,7 @@ public class MusicNeuralNet
 	public void outputSavedNetwork()
 	{
 		NeuralNetwork loadedNet = NeuralNetwork.createFromFile("src/neuralNet.nnet");
-		this.neuralNet.setInput(new double[]{0});
+		this.neuralNet.setInput(new double[]{4,2,0,2,4});
 		this.neuralNet.calculate();
 		double[]networkOut = this.neuralNet.getOutput();
 		System.out.println(Arrays.toString(networkOut));
@@ -95,7 +95,7 @@ public class MusicNeuralNet
 	
 	public static void main(String[] args) 
 	{
-		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/StepSongs.txt");
+		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongs.txt");
 		mNN.trainNeuralNet();
 		mNN.outputSavedNetwork();
 	}
