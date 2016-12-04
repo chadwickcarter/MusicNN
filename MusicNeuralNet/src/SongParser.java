@@ -19,9 +19,9 @@ public class SongParser
 		FileOutputStream fos = new FileOutputStream(outputSongs);
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 		
-		for (File song : songs)
+		for (int k = 0; k < songs.length; k++)
 		{
-			Scanner sc = new Scanner(song);
+			Scanner sc = new Scanner(songs[k]);
 			String sequence = sc.next();
 			
 			for (int i = 5; i < sequence.length(); i++)
@@ -31,7 +31,13 @@ public class SongParser
 					bw.write(sequence.charAt(j) + " ");
 				}
 				bw.write(sequence.charAt(i));
-				bw.newLine();
+				if ((k == (songs.length - 1)) && (i == sequence.length() - 1))
+				{
+				}
+				else
+				{
+					bw.newLine();
+				}
 			}
 			sc.close();
 		}
