@@ -64,7 +64,7 @@ public class MusicNeuralNet
 	public void createNeuralNet()
 	{
 		//create multi layer perceptron
-		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.TANH,5,3,1);
+		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.TANH,5,3,3,1);
 		BackPropagation backProp = (BackPropagation)this.neuralNet.getLearningRule();
 		backProp.setMaxIterations(10000);
 		backProp.setLearningRate(0.01);
