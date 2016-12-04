@@ -14,7 +14,7 @@ public class SongParser
 		
 		File outputDirectory = new File("ParsedSongs");
 		outputDirectory.mkdir();
-		File outputSongs = new File("ParsedSongs\\ParsedSongs.txt");
+		File outputSongs = new File("ParsedSongs\\ParsedSongsDouble.txt");
 		
 		FileOutputStream fos = new FileOutputStream(outputSongs);
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
@@ -28,9 +28,9 @@ public class SongParser
 			{
 				for (int j = i-5; j < i; j++)
 				{
-					bw.write(sequence.charAt(j) + " ");
+					bw.write((Character.getNumericValue(sequence.charAt(j)) * 0.1) + " ");
 				}
-				bw.write(sequence.charAt(i));
+				bw.write((Character.getNumericValue(sequence.charAt(i)) * 0.1) + "");
 				if ((k == (songs.length - 1)) && (i == sequence.length() - 1))
 				{
 				}
