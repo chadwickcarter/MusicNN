@@ -18,8 +18,8 @@ public class MusicNeuralNet
 	BackPropagation backProp;
 	int numIn = 5;
 	int numOut = 1;
-	int maxIterations = 10000;
-	double learningRate=0.01;
+	int maxIterations = 100000;
+	double learningRate=0.001;
 	
 	public MusicNeuralNet(String fname)
 	{
@@ -42,12 +42,12 @@ public class MusicNeuralNet
 				double[] inputs = new double[this.numIn];
 				for(int i=0;i<this.numIn;++i)
 				{
-					inputs[i]=scan.nextInt();
+					inputs[i]=scan.nextDouble();
 				}
 				double[] outputs = new double [this.numOut];
 				for(int j=0;j<this.numOut;++j)
 				{
-					outputs[j]=scan.nextInt();
+					outputs[j]=scan.nextDouble();
 				}
 				//add row to training data
 				DataSetRow row = new DataSetRow(inputs,outputs);
@@ -67,7 +67,7 @@ public class MusicNeuralNet
 	public void createNeuralNet()
 	{
 		//create multi layer perceptron
-		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.TANH,this.numIn,3,3,this.numOut);
+		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID,this.numIn,3,3,this.numOut);
 		this.backProp = (BackPropagation)this.neuralNet.getLearningRule();
 		this.backProp.setMaxIterations(this.maxIterations);
 		this.backProp.setLearningRate(this.learningRate);
@@ -86,7 +86,7 @@ public class MusicNeuralNet
 	public void outputSavedNetwork()
 	{
 		NeuralNetwork loadedNet = NeuralNetwork.createFromFile("src/neuralNet.nnet");
-		this.neuralNet.setInput(new double[]{4,2,0,2,4});
+		this.neuralNet.setInput(new double[]{0.7,0.9,0.7,0.5,0.4});
 		this.neuralNet.calculate();
 		double[]networkOut = this.neuralNet.getOutput();
 		System.out.println(Arrays.toString(networkOut));
@@ -95,7 +95,7 @@ public class MusicNeuralNet
 	
 	public static void main(String[] args) 
 	{
-		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongs.txt");
+		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDouble.txt");
 		mNN.trainNeuralNet();
 		mNN.outputSavedNetwork();
 	}
