@@ -85,7 +85,7 @@ public class MusicNeuralNet
 	
 	public void outputSavedNetwork()
 	{
-		NeuralNetwork loadedNet = NeuralNetwork.createFromFile("src/neuralNet.nnet");
+		NeuralNetwork loadedNet = NeuralNetwork.createFromFile("src/neurNet.nnet");
 		this.neuralNet.setInput(new double[]{0.7,0.9,0.7,0.5,0.4});
 		this.neuralNet.calculate();
 		double[]networkOut = this.neuralNet.getOutput();
