@@ -19,11 +19,12 @@ public class MusicNeuralNet
 	DataSet trainingSet;
 	MultiLayerPerceptron neuralNet;
 	BackPropagation backProp;
-	int numIn = 5;
+	int numIn = 3;
 	int numOut = 1;
 	int maxIterations = 100000;
 	double learningRate = 0.01;
 	String netFilename = "src/neurNet.nnet";
+	String[] noteVals = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C"};
 	
 	public MusicNeuralNet(String fname)
 	{
@@ -114,11 +115,12 @@ public class MusicNeuralNet
 			double outputVal = networkOut[0];
 			
 			int outputNote = (int) Math.round(outputVal*10);
-			System.out.println("OUT: "+outputVal);
-			System.out.println("					Note: "+outputNote);
-			System.out.println("REMOVED: "+queue.remove());
+			System.out.println("Note: "+outputNote);
+			
+			queue.remove();
+			
 			queue.add(outputVal);
-			System.out.println("ENQUEUED: "+outputVal+"\n");
+			
 	
 			
 		}
@@ -127,7 +129,7 @@ public class MusicNeuralNet
 
 	public static void main(String[] args) 
 	{
-		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDouble.txt");
+		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleThreeBehind.txt");
 		mNN.trainNeuralNet();
 		mNN.outputNotes(10);
 	}
