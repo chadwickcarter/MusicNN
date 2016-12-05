@@ -28,9 +28,9 @@ public class SongParser
 			{
 				for (int j = i-5; j < i; j++)
 				{
-					bw.write((Character.getNumericValue(sequence.charAt(j)) * 0.1) + " ");
+					bw.write((Character.getNumericValue(sequence.charAt(j))/10.0) + " ");
 				}
-				bw.write((Character.getNumericValue(sequence.charAt(i)) * 0.1) + "");
+				bw.write((Character.getNumericValue(sequence.charAt(i))/10.0) + "");
 				if ((k == (songs.length - 1)) && (i == sequence.length() - 1))
 				{
 				}
@@ -54,7 +54,7 @@ public class SongParser
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 		
 		
-		FileReader fin = new FileReader("RawSongs/songsteps.txt");
+		FileReader fin = new FileReader("songsteps_onlyQ.txt");
 		Scanner scan = new Scanner(fin);
 		
 		while(scan.hasNextLine())
@@ -62,8 +62,8 @@ public class SongParser
 			String sequence = scan.next();
 			for (int i = 0; i < sequence.length()-1; i++)
 			{
-				System.out.println(sequence.charAt(i)+ " "+sequence.charAt(i+1)+"\n");
-				bw.write(sequence.charAt(i)+ " "+sequence.charAt(i+1)+"\n");
+				//System.out.println(sequence.charAt(i)+ " "+sequence.charAt(i+1)+"\n");
+				bw.write((Character.getNumericValue(sequence.charAt(i))/10.0)+ " "+(Character.getNumericValue(sequence.charAt(i+1))/10.0)+"\n");
 				
 			}
 			
