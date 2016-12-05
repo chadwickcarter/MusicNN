@@ -24,7 +24,8 @@ public class MusicNeuralNet
 	int numOut = 1;
 	int maxIterations = 100000;
 	double learningRate = 0.01;
-	String netFilename = "src/neuralNet.nnet";
+	String netFilename = "src/test.nnet";
+	String savedFilename = "src/neurNet.nnet";
 	String[] noteVals = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C"};
 	
 	public MusicNeuralNet(String fname)
@@ -91,21 +92,19 @@ public class MusicNeuralNet
 	
 	public void outputNotes(int numNotes)
 	{
-		NeuralNetwork loadedNet = NeuralNetwork.createFromFile(this.netFilename);
+		NeuralNetwork loadedNet = NeuralNetwork.createFromFile(this.savedFilename);
 		this.neuralNet = (MultiLayerPerceptron)loadedNet;
 		ArrayBlockingQueue queue = new ArrayBlockingQueue<>(this.numIn);
-		queue.add(0.5);
-		queue.add(0.5);
-		queue.add(0.2);
-		queue.add(0.0);
-		//queue.add(0.4);
-		//queue.add(0.5);
-		//queue.add(0.7);
 		
-		
+		double[] exampleInput = {0.4,0.7,0.9,0.0,0.4,0.7,0.4};
 		
 		String song = "";
-		song+="G G D C ";
+		for(int k=0;k<this.numIn;++k)
+		{
+			queue.add((double)exampleInput[k]);
+			song+=(this.noteVals[(int)(exampleInput[k]*10)]+" ");
+		}
+		
 		for(int i=0;i<numNotes;++i)
 		{
 			Iterator iterator = queue.iterator();
@@ -119,7 +118,7 @@ public class MusicNeuralNet
 			this.neuralNet.calculate();
 			double[]networkOut = this.neuralNet.getOutput();
 			double outputVal = networkOut[0];
-			System.out.println("OUT: "+outputVal);
+			//System.out.println("OUT: "+outputVal);
 			int outputNote = (int) Math.round(outputVal*10);
 			//System.out.println("Note: "+outputNote);
 			
@@ -139,7 +138,7 @@ public class MusicNeuralNet
 	public static void main(String[] args) 
 	{
 		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleFourBehind.txt");
-		mNN.trainNeuralNet();
+		//mNN.trainNeuralNet();
 		mNN.outputNotes(12);
 	}
 
