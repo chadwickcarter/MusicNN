@@ -14,15 +14,22 @@ public class SongParser
 		
 		File outputDirectory = new File("ParsedSongs");
 		outputDirectory.mkdir();
-		File outputSongs = new File("ParsedSongs\\ParsedSongsDouble.txt");
+		File outputSongsThreeBehind = new File("ParsedSongs\\ParsedSongsDoubleThreeBehind.txt");
+		File outputSongsFiveBehind = new File("ParsedSongs\\ParsedSongsDoubleFiveBehind.txt");
 		
-		FileOutputStream fos = new FileOutputStream(outputSongs);
+		FileOutputStream fos = new FileOutputStream(outputSongsThreeBehind);
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+		
+		FileOutputStream fos2 = new FileOutputStream(outputSongsFiveBehind);
+		BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(fos2));
 		
 		for (int k = 0; k < songs.length; k++)
 		{
 			Scanner sc = new Scanner(songs[k]);
 			String sequence = sc.next();
+			
+			Scanner sc2 = new Scanner(songs[k]);
+			String sequence2 = sc2.next();
 			
 			for (int i = 3; i < sequence.length(); i++)
 			{
@@ -39,10 +46,28 @@ public class SongParser
 					bw.newLine();
 				}
 			}
+			
+			for (int i = 5; i < sequence2.length(); i++)
+			{
+				for (int j = i-5; j < i; j++)
+				{
+					bw2.write((Character.getNumericValue(sequence2.charAt(j))/10.0) + " ");
+				}
+				bw2.write((Character.getNumericValue(sequence2.charAt(i))/10.0) + "");
+				if ((k == (songs.length - 1)) && (i == sequence2.length() - 1))
+				{
+				}
+				else
+				{
+					bw2.newLine();
+				}
+			}
 			sc.close();
+			sc2.close();
 		}
 		
 		bw.close();
+		bw2.close();
 	}
 	
 	public void parseSteps() throws IOException
