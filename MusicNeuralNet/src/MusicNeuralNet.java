@@ -17,17 +17,18 @@ import org.jfugue.player.Player;
 public class MusicNeuralNet 
 {
 	String filename;
-	DataSet trainingSet;
-	MultiLayerPerceptron neuralNet;
-	BackPropagation backProp;
-	int numIn = 4;
-	int numOut = 1;
-	int maxIterations = 100000;
-	double learningRate = 0.01;
+	DataSet trainingSet; //DataSet object is input to network
+	MultiLayerPerceptron neuralNet; //MLP neural network
+	BackPropagation backProp; //Uses BackPropagation algorithm to learn
+	int numIn = 4; //How many previous notes are used as input
+	int numOut = 1; //Output one note
+	int maxIterations = 100000; //Limits training time
+	double learningRate = 0.01; //Best results with this rate so far
 	String netFilename = "src/test.nnet";
 	String savedFilename = "src/neurNet.nnet";
-	String[] noteVals = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C"};
+	String[] noteVals = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C"}; //mapping of int index to note names
 	
+	//Constructor passes filename for data and creates a blank neural network
 	public MusicNeuralNet(String fname)
 	{
 		System.out.println("\nMusic Composition Neural Network\n");
@@ -36,6 +37,7 @@ public class MusicNeuralNet
 		this.createNeuralNet();
 	}
 	
+	//creates training data from specified filename
 	public void createTrainingData()
 	{
 		this.trainingSet = new DataSet(this.numIn,this.numOut);
@@ -71,6 +73,7 @@ public class MusicNeuralNet
 		
 	}
 	
+	//Creates a blank neural net with the BackPropagation learning rule
 	public void createNeuralNet()
 	{
 		//create multi layer perceptron
@@ -82,6 +85,9 @@ public class MusicNeuralNet
 		
 	}
 	
+	//Trains the neural net
+	//Its use in main can be commented out to avoid the time cost of training,
+	//and we can load a saved network
 	public void trainNeuralNet()
 	{
 		System.out.println("Training neural network...");
@@ -90,6 +96,7 @@ public class MusicNeuralNet
 		System.out.println("\nTrained and saved!\n");
 	}
 	
+	//Outputs the specified number of notes from the saved neural network
 	public void outputNotes(int numNotes)
 	{
 		NeuralNetwork loadedNet = NeuralNetwork.createFromFile(this.savedFilename);
@@ -130,11 +137,14 @@ public class MusicNeuralNet
 			
 		}
 		System.out.println("\n"+song);
+		
+		//Play the generated song
 		Player player = new Player();
 		player.play(song);
 			
 	}
 
+	//Main function creates neural network object, trains (optionally), and outputs notes.
 	public static void main(String[] args) 
 	{
 		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleFourBehind.txt");
