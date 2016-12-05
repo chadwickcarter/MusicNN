@@ -15,12 +15,12 @@ public class SongParser
 		File outputDirectory = new File("ParsedSongs");
 		outputDirectory.mkdir();
 		File outputSongsThreeBehind = new File("ParsedSongs\\ParsedSongsDoubleThreeBehind.txt");
-		File outputSongsFiveBehind = new File("ParsedSongs\\ParsedSongsDoubleFiveBehind.txt");
+		File outputSongsTwoBehind = new File("ParsedSongs\\ParsedSongsDoubleTwoBehind.txt");
 		
 		FileOutputStream fos = new FileOutputStream(outputSongsThreeBehind);
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 		
-		FileOutputStream fos2 = new FileOutputStream(outputSongsFiveBehind);
+		FileOutputStream fos2 = new FileOutputStream(outputSongsTwoBehind);
 		BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(fos2));
 		
 		for (int k = 0; k < songs.length; k++)
@@ -47,9 +47,9 @@ public class SongParser
 				}
 			}
 			
-			for (int i = 5; i < sequence2.length(); i++)
+			for (int i = 2; i < sequence2.length(); i++)
 			{
-				for (int j = i-5; j < i; j++)
+				for (int j = i-2; j < i; j++)
 				{
 					bw2.write((Character.getNumericValue(sequence2.charAt(j))/10.0) + " ");
 				}
