@@ -20,7 +20,7 @@ public class MusicNeuralNet
 	DataSet trainingSet;
 	MultiLayerPerceptron neuralNet;
 	BackPropagation backProp;
-	int numIn = 5;
+	int numIn = 4;
 	int numOut = 1;
 	int maxIterations = 100000;
 	double learningRate = 0.01;
@@ -73,7 +73,7 @@ public class MusicNeuralNet
 	public void createNeuralNet()
 	{
 		//create multi layer perceptron
-		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID,this.numIn,3,3,this.numOut);
+		this.neuralNet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID,this.numIn,5,5,this.numOut);
 		this.backProp = (BackPropagation)this.neuralNet.getLearningRule();
 		this.backProp.setMaxIterations(this.maxIterations);
 		this.backProp.setLearningRate(this.learningRate);
@@ -92,18 +92,20 @@ public class MusicNeuralNet
 	public void outputNotes(int numNotes)
 	{
 		NeuralNetwork loadedNet = NeuralNetwork.createFromFile(this.netFilename);
-		
+		this.neuralNet = (MultiLayerPerceptron)loadedNet;
 		ArrayBlockingQueue queue = new ArrayBlockingQueue<>(this.numIn);
-		queue.add(0.0);
-		queue.add(0.2);
-		queue.add(0.4);
 		queue.add(0.5);
-		queue.add(0.7);
+		queue.add(0.5);
+		queue.add(0.2);
+		queue.add(0.0);
+		//queue.add(0.4);
+		//queue.add(0.5);
+		//queue.add(0.7);
 		
 		
 		
 		String song = "";
-		song+="C D E ";
+		song+="G G D C ";
 		for(int i=0;i<numNotes;++i)
 		{
 			Iterator iterator = queue.iterator();
@@ -117,7 +119,7 @@ public class MusicNeuralNet
 			this.neuralNet.calculate();
 			double[]networkOut = this.neuralNet.getOutput();
 			double outputVal = networkOut[0];
-			
+			System.out.println("OUT: "+outputVal);
 			int outputNote = (int) Math.round(outputVal*10);
 			//System.out.println("Note: "+outputNote);
 			
@@ -128,7 +130,7 @@ public class MusicNeuralNet
 			queue.add(outputVal);
 			
 		}
-		System.out.println(song);
+		System.out.println("\n"+song);
 		Player player = new Player();
 		player.play(song);
 			
@@ -136,9 +138,9 @@ public class MusicNeuralNet
 
 	public static void main(String[] args) 
 	{
-		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleFiveBehind.txt");
-		mNN.trainNeuralNet();
-		mNN.outputNotes(10);
+		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleFourBehind.txt");
+		//mNN.trainNeuralNet();
+		mNN.outputNotes(12);
 	}
 
 }

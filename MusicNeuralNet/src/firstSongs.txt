@@ -1,0 +1,8 @@
+0 2 4 5 7 7 5 3 3 3 3 2 2 3 2
+C D E F G F E E F F F E E E F 
+E D C D E E D C# C# D D# D# D# C# C# D D#
+G A G F D# D D D# E F F F E E
+G G D C C# D# E E E E D# D# D# D# 
+G G D C C D# E C# D E E F F E 
+G G D C C# D# F E D# D# D# E E E E E D# D# E E E E E D# 
+G G D C C E F C# E E D# C# C# D# D# F 
