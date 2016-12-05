@@ -8,6 +8,7 @@ public class SongParser
 		
 	}
 	
+	//Parses raw song files into files of successive note sequences of varying length which are readable by the neural net
 	public void parse() throws IOException
 	{
 		File[] songs = new File("RawSongs").listFiles();
@@ -70,6 +71,7 @@ public class SongParser
 		bw2.close();
 	}
 	
+	//Parses raw song files into sequences of two consecutive notes which are readable by the neural net
 	public void parseSteps() throws IOException
 	{
 		
@@ -97,7 +99,7 @@ public class SongParser
 		bw.close();
 	}
 	
-	
+	//Creates a new parser which analyzes raw song data and writes output to files readable by neural net
 	public static void main(String[] args) throws IOException
 	{
 		SongParser parser = new SongParser();
