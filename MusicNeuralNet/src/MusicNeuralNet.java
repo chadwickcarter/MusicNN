@@ -24,7 +24,7 @@ public class MusicNeuralNet
 	int numOut = 1;
 	int maxIterations = 100000;
 	double learningRate = 0.01;
-	String netFilename = "src/neurNet.nnet";
+	String netFilename = "src/neuralNet.nnet";
 	String[] noteVals = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C"};
 	
 	public MusicNeuralNet(String fname)
@@ -139,7 +139,7 @@ public class MusicNeuralNet
 	public static void main(String[] args) 
 	{
 		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleFourBehind.txt");
-		//mNN.trainNeuralNet();
+		mNN.trainNeuralNet();
 		mNN.outputNotes(12);
 	}
 

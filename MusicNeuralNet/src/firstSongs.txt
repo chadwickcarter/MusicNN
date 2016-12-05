@@ -6,3 +6,5 @@ G G D C C# D# E E E E D# D# D# D#
 G G D C C D# E C# D E E F F E 
 G G D C C# D# F E D# D# D# E E E E E D# D# E E E E E D# 
 G G D C C E F C# E E D# C# C# D# D# F 
+
+G G D C C# F E D D D F E D D D F 
