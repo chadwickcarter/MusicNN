@@ -22,7 +22,7 @@ public class MusicNeuralNet
 	int numIn = 5;
 	int numOut = 1;
 	int maxIterations = 100000;
-	double learningRate=0.01;
+	double learningRate = 0.01;
 	String netFilename = "src/neurNet.nnet";
 	
 	public MusicNeuralNet(String fname)
