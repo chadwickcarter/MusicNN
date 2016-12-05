@@ -24,9 +24,9 @@ public class SongParser
 			Scanner sc = new Scanner(songs[k]);
 			String sequence = sc.next();
 			
-			for (int i = 5; i < sequence.length(); i++)
+			for (int i = 3; i < sequence.length(); i++)
 			{
-				for (int j = i-5; j < i; j++)
+				for (int j = i-3; j < i; j++)
 				{
 					bw.write((Character.getNumericValue(sequence.charAt(j))/10.0) + " ");
 				}
