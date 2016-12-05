@@ -12,6 +12,7 @@ import org.neuroph.core.learning.LearningRule;
 import org.neuroph.nnet.learning.BackPropagation;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import org.jfugue.player.Player;
 
 public class MusicNeuralNet 
 {
@@ -19,7 +20,7 @@ public class MusicNeuralNet
 	DataSet trainingSet;
 	MultiLayerPerceptron neuralNet;
 	BackPropagation backProp;
-	int numIn = 3;
+	int numIn = 5;
 	int numOut = 1;
 	int maxIterations = 100000;
 	double learningRate = 0.01;
@@ -100,6 +101,9 @@ public class MusicNeuralNet
 		queue.add(0.7);
 		
 		
+		
+		String song = "";
+		song+="C D E ";
 		for(int i=0;i<numNotes;++i)
 		{
 			Iterator iterator = queue.iterator();
@@ -107,7 +111,7 @@ public class MusicNeuralNet
 			for(int j=0;j<this.numIn;++j)
 			{
 				inputs[j]= (double)iterator.next();
-				System.out.println(" IN: "+inputs[j]);
+				
 			}
 			this.neuralNet.setInput(inputs);
 			this.neuralNet.calculate();
@@ -115,21 +119,24 @@ public class MusicNeuralNet
 			double outputVal = networkOut[0];
 			
 			int outputNote = (int) Math.round(outputVal*10);
-			System.out.println("Note: "+outputNote);
+			//System.out.println("Note: "+outputNote);
+			
+			song+=(this.noteVals[outputNote]+" ");
 			
 			queue.remove();
 			
 			queue.add(outputVal);
 			
-	
-			
 		}
+		System.out.println(song);
+		Player player = new Player();
+		player.play(song);
 			
 	}
 
 	public static void main(String[] args) 
 	{
-		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleThreeBehind.txt");
+		MusicNeuralNet mNN = new MusicNeuralNet("ParsedSongs/ParsedSongsDoubleFiveBehind.txt");
 		mNN.trainNeuralNet();
 		mNN.outputNotes(10);
 	}
